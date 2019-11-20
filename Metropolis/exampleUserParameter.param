@@ -1,0 +1,6 @@
+Deviation = 0.5
+Eta = 1.0
+lambda = 0.0016
+Number sweeps = 400000
+Write out frequency = 10000
+Number lattice sites = 500
