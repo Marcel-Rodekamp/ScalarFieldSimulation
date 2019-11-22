@@ -37,18 +37,13 @@ inline T expectationValue(ParamList<T> & param){
 
         T x = average(lattice, param);
       
-        // compute exponential of action
-        expS = exp(-action(lattice, param));
-
-        // extend partition function
-        partitionFunk += expS;
-
         // extend expectation value
-        expVal += (x * expS);
+        expVal += x;
+
     }
 
     // normalize expectation value
-    return expVal / partitionFunk;
+    return expVal / numberOfConfs;
 }
 
 #endif //MEASUREMENT_H
