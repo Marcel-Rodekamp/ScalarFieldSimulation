@@ -9,8 +9,20 @@
 #include "fileIO.h"
 
 template<typename T>
+inline T average(std::vector<T> lattice, ParamList<T> param){
+        T x = 0;
+        
+        // average over all lattice points
+        for(auto site : lattice){
+            x += site;
+        }
+        return x/lattice.size();
+
+
+}
+
+template<typename T>
 inline T expectationValue(ParamList<T> & param){
-    T x = 0;
     T expVal = 0;
     T expS = 0;
     T partitionFunk = 0;
@@ -20,17 +32,11 @@ inline T expectationValue(ParamList<T> & param){
 
     // average over all configurations
     for(size_t conf = 0; conf <= numberOfConfs; ++conf){
-        x = 0;
-
         // load specific configuration
         readLatticeFromFile(lattice, conf * param.writeOut());
 
-        // average over all lattice points
-        for(auto site : lattice){
-            x += site;
-        }
-        x /= lattice.size();
-
+        T x = average(lattice, param);
+      
         // compute exponential of action
         expS = exp(-action(lattice, param));
 
