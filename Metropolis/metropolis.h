@@ -21,11 +21,9 @@ inline T metropolis(std::vector<T> & lattice, std::vector<T> & buffer, ParamList
     // generate an rng of a uniform real distribution
     std::uniform_real_distribution<T>  uniform (0.0,1.0);
 
-    // compute the action of the given starting lattice and declare variables
-    T backupAction = action(lattice, 0, param);
-    T newAction;
-
     for(size_t sweep = 0; sweep <= param.numSweeps(); ++sweep){
+        
+        T backupAction = action(lattice, 0, param);
         // we have to update the entire lattice in one sweep to have ergodicity
         // Therefore, we generate a candidate and store it into the buffer
         for(size_t site = 0; site < param.numLatSites(); ++site){
@@ -34,7 +32,7 @@ inline T metropolis(std::vector<T> & lattice, std::vector<T> & buffer, ParamList
 
 
             // compute the new action
-            newAction = action(buffer, site, param);
+            T newAction = action(buffer, site, param);
 
             // accept with min (1,exp(- (S' - S)))
             // T r = uniform(gen);
