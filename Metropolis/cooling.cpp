@@ -26,7 +26,7 @@ int main(){
     buffer = lattice;
 
     // perform the metropolis algorithm
-    PREC acceptRate = metropolis<PREC>(lattice, buffer,param);
+    PREC acceptRate = metropolis(lattice, buffer,param);
 
     std::cout << "Acceptance Rate = " << acceptRate << "\n";
 
