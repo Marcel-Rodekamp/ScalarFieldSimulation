@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+def average(lattice, latticeSize):
+    av = 0
+    for site in lattice:
+        av += site
+
+    return av / latticeSize
 
 def plotLattice():
     configName = [0, 240000, 400000]
@@ -28,4 +34,3 @@ def plotLattice():
     plt.clf()
 
 
-plotLattice()
