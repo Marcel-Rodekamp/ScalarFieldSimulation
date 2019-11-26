@@ -22,6 +22,29 @@ inline T average(std::vector<T> lattice, ParamList<T> param){
 }
 
 template<typename T>
+inline T correlation(ParamList<T> & param){
+    const size_t numberOfConfs = param.numSweeps() / param.writeOut(); 
+
+    std::vector<T> lattice(param.numLatSites());
+    std::vector<T> correlation(param.numLatSites(),0);
+
+
+    T expVal = 0;
+    
+    for(size_t conf = 0; conf <= numberOfConfs; ++conf){
+        readLatticeFromFile(lattice, conf * param.writeOut());
+        for(size_t site =0; site < param.numLatSites(); ++site){
+            correlation[site] += lattice[0] * lattice[site]/(numberOfConfs);
+            expVal += correlation[site];
+        }
+    }
+    
+    printLatticeToFile(correlation,-1);
+
+    return expVal/param.numLatSites();
+}
+
+template<typename T>
 inline T expectationValue(ParamList<T> & param){
     T expVal = 0;
     T expS = 0;

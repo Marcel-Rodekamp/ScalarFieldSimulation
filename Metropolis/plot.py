@@ -41,6 +41,19 @@ def plotExpVal(latticeSize = 500, configNum = range(0,400000,10000)):
         plt.show()
     plt.clf()    
 
-allConfNum = range(0,400000,10000)
-plotExpVal()
+def plotCorrelation(latticeSize = 500):
+    yData = np.loadtxt("Confs/config_18446744073709551615.lat", usecols = 1)
+
+    plt.plot(range(0,latticeSize,1),yData)
+    plt.grid()
+    plt.ylabel("<x(0)x(t)>")
+    plt.xlabel("t")
+    plt.savefig("corr_metropolis.pdf")
+    if SHOWPLOT:
+        plt.show()
+    plt.clf()  
+    
+#allConfNum = range(0,400000,10000)
+#plotExpVal()
 #plotLattice()
+plotCorrelation()

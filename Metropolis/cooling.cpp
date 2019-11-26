@@ -9,7 +9,7 @@
 #include "metropolis.h"
 
 #define PREC double
-
+/*
 int main(){
     ParamList<PREC> param;
     std::string paramFileName = "exampleUserParameter.param";
@@ -37,7 +37,16 @@ int main(){
 
     return 0;
 }
+*/
 
+int main(){
+    ParamList<PREC> param;
+    std::string paramFileName = "exampleUserParameter.param";
+    param.readFile(paramFileName);
+
+    std::cout << "< <x(0)x(t)> >_t = " << correlation(param) << "\n";
+
+}
 
 
 
