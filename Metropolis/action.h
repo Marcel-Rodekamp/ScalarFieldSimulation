@@ -44,4 +44,35 @@ inline T action(const std::vector<T> & lattice, const size_t site, ParamList<T> 
          + potential(lattice[site], param);
 }
 
+template<typename T>
+inline T action(const std::vector<T> & lattice, const T changedSite ,const size_t site, ParamList<T> & param)
+{
+    // compute the action by adding up the kinetic an potential energy
+    return kineticEnergy(lattice[leftNN(site,lattice.size())],
+                       changedSite,
+                       lattice[rightNN(site,lattice.size())])
+         + potential(changedSite, param);
+}
 #endif // ACTION_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

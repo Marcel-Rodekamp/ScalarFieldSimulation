@@ -22,6 +22,7 @@ def plotLattice(latticeSize = 500, configNum = [0,240000,400000]):
     plt.ylabel("x")
     plt.xlabel("Site")
     plt.legend()
+    plt.grid()
     plt.savefig("conf_metropolis.pdf")
     if SHOWPLOT: 
         plt.show()
@@ -37,6 +38,7 @@ def plotExpVal(latticeSize = 500, configNum = range(0,400000,10000)):
     plt.ylabel("<x>")
     plt.xlabel("#sweeps")
     plt.savefig("expVal_metropolis.pdf")
+    plt.grid()
     if SHOWPLOT:
         plt.show()
     plt.clf()    
@@ -54,6 +56,6 @@ def plotCorrelation(latticeSize = 500):
     plt.clf()  
     
 #allConfNum = range(0,400000,10000)
-#plotExpVal()
+plotExpVal()
 #plotLattice()
-plotCorrelation()
+#plotCorrelation()

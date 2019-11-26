@@ -17,12 +17,10 @@ inline T average(std::vector<T> lattice, ParamList<T> param){
             x += site;
         }
         return x/lattice.size();
-
-
 }
 
 template<typename T>
-inline T correlation(ParamList<T> & param){
+inline void correlation(ParamList<T> & param){
     const size_t numberOfConfs = param.numSweeps() / param.writeOut(); 
 
     std::vector<T> lattice(param.numLatSites());
@@ -35,13 +33,11 @@ inline T correlation(ParamList<T> & param){
         readLatticeFromFile(lattice, conf * param.writeOut());
         for(size_t site =0; site < param.numLatSites(); ++site){
             correlation[site] += lattice[0] * lattice[site]/(numberOfConfs);
-            expVal += correlation[site];
         }
     }
     
     printLatticeToFile(correlation,-1);
 
-    return expVal/param.numLatSites();
 }
 
 template<typename T>
@@ -54,7 +50,7 @@ inline T expectationValue(ParamList<T> & param){
     std::vector<T> lattice(param.numLatSites());
 
     // average over all configurations
-    for(size_t conf = 0; conf <= numberOfConfs; ++conf){
+    for(size_t conf = 1; conf <= numberOfConfs; ++conf){
         // load specific configuration
         readLatticeFromFile(lattice, conf * param.writeOut());
 
@@ -66,7 +62,26 @@ inline T expectationValue(ParamList<T> & param){
     }
 
     // normalize expectation value
-    return expVal / numberOfConfs;
+    return expVal / (numberOfConfs);
 }
 
 #endif //MEASUREMENT_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

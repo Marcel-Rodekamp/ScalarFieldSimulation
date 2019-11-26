@@ -7,7 +7,7 @@
 #include "exampleUserParameter.h"
 
 template<typename T>
-inline T metropolis(std::vector<T> & lattice, std::vector<T> & buffer, ParamList<T> & param)
+inline T metropolis(std::vector<T> & lattice, ParamList<T> & param)
 {
     // Metropolis hasting algorithm with probability density exp[-(S' - S)]
     size_t acceptance = 0;
@@ -21,36 +21,40 @@ inline T metropolis(std::vector<T> & lattice, std::vector<T> & buffer, ParamList
     // generate an rng of a uniform real distribution
     std::uniform_real_distribution<T>  uniform (0.0,1.0);
 
+    // create a buffer lattice for the update steps in one sweep.
+    // The buffer is kept constant during one sweep
+    std::vector<T> bufferLat(lattice);
+
     for(size_t sweep = 0; sweep <= param.numSweeps(); ++sweep){
-        
-        T backupAction = action(lattice, 0, param);
         // we have to update the entire lattice in one sweep to have ergodicity
         // Therefore, we generate a candidate and store it into the buffer
-        for(size_t site = 0; site < param.numLatSites(); ++site){
-            // update the lattice at one point
-            buffer[site] = lattice[site] + rn(gen);
 
+        for(size_t site = 0; site < param.numLatSites(); ++site){
+            T backupAction = action(bufferLat, site, param);
+
+            // update the lattice at one point
+            T buffer = bufferLat[site] + rn(gen);
 
             // compute the new action
-            T newAction = action(buffer, site, param);
+            T newAction = action(bufferLat, buffer, site, param);
 
             // accept with min (1,exp(- (S' - S)))
             // T r = uniform(gen);
             // T p = exp(-(newAction-backupAction));
             if(uniform(gen2) < exp(-(newAction-backupAction))){
-                lattice[site] = buffer[site];
+                lattice[site] = buffer;
 
                 // store the new action
-                backupAction = newAction;
                 acceptance += 1;
             }
         }
 
+        bufferLat = lattice;
+
         // every few sweeps, we would like to write the configuration into a file
         if(sweep % param.writeOut() == 0){
             printLatticeToFile(lattice, sweep);
-            std::cout << "Print Sweep = " << sweep << ": "
-                      << action(lattice, param) << "\n";
+            std::cout << "Print Sweep = " << sweep << "\n";  
         }
 
     }
@@ -59,3 +63,25 @@ inline T metropolis(std::vector<T> & lattice, std::vector<T> & buffer, ParamList
 }
 
 #endif //METROPOLIS_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

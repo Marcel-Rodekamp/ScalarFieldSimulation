@@ -9,7 +9,7 @@
 #include "metropolis.h"
 
 #define PREC double
-/*
+
 int main(){
     ParamList<PREC> param;
     std::string paramFileName = "exampleUserParameter.param";
@@ -17,16 +17,12 @@ int main(){
 
     // allocate storage for the lattice
     std::vector<PREC> lattice(param.numLatSites());
-    std::vector<PREC> buffer(param.numLatSites());
 
     // we start with a random configuration i.e. hot start
     hotstart(lattice);
 
-    // copy the lattice to the buffer
-    buffer = lattice;
-
     // perform the metropolis algorithm
-    PREC acceptRate = metropolis(lattice, buffer,param);
+    PREC acceptRate = metropolis(lattice, param);
 
     std::cout << "Acceptance Rate = " << acceptRate << "\n";
 
@@ -37,8 +33,8 @@ int main(){
 
     return 0;
 }
-*/
 
+/*
 int main(){
     ParamList<PREC> param;
     std::string paramFileName = "exampleUserParameter.param";
@@ -47,6 +43,7 @@ int main(){
     std::cout << "< <x(0)x(t)> >_t = " << correlation(param) << "\n";
 
 }
+*/
 
 
 

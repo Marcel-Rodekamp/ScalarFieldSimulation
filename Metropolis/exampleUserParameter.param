@@ -1,4 +1,4 @@
-Deviation = 0.5
+Deviation = 1 
 Eta = 1.0
 lambda = 0.0016
 Number sweeps = 400000
